@@ -18,15 +18,17 @@ export default function Page() {
     date: new Date().toISOString().slice(0, 10)
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }))
-  };
+ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
+  setFormData(prevData => ({
+    ...prevData,
+    [name]: value
+  }))
+};
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const uuid = uuidv4();
     fetch(`/api/posts?id=${uuid}&title=${formData.title}&author=${user?.name}&content=${content || formData.content}&date=${formData.date}`, {
@@ -96,7 +98,7 @@ export default function Page() {
         </div>
         <div>
           <label htmlFor="content" className="block font-medium">Content:</label>
-          <textarea id="content" name="content" rows="4" value={postContent} onChange={handleChange} className="w-full border-2 border-purple-100 p-2 rounded-md focus:border-purple-200 focus:outline-none"></textarea>
+          <textarea id="content" name="content" rows={4} value={postContent} onChange={handleChange} className="w-full border-2 border-purple-100 p-2 rounded-md focus:border-purple-200 focus:outline-none"></textarea>
           {generating && <p className='text-purple-700 my-1'>Generating content...</p>}
           <button onClick={generateContent} type="button" className="bg-blue-400 text-white px-4 py-2 rounded-md bg-purple-600  hover:bg-purple-700">Generate Content</button>
         </div>

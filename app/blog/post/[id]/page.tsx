@@ -14,8 +14,8 @@ export default async function Page({params}: {params: {id: string}}) {
 
   return (
     <>
-      <h1>Post</h1>
-      {post && <Post {...post} />}
+      <h1 className="text-4xl font-bold">Post</h1>
+       <Post {...post} />
     </>
   );
 }
